@@ -1,0 +1,24 @@
+# Bytecode compiled
+__pycache__/
+
+# Distribution / packaging
+.Python
+*.egg-info/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Dev
+.idea/
+
+# Data files
+data/
+*.csv
+*.xls
+
+# Reports
+reports/
+
+# Others
+old_versions/
+hp_dkgp/
