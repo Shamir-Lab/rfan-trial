@@ -265,43 +265,6 @@ def acquired_data_dist(
         plt.show()
     _ = plt.close()
 
-
-def plot_convergence(output_dir, methods):
-    _ = plt.figure(figsize=(682 / 80, 512 / 80), dpi=300)
-    for acquisition_function in methods:
-        pehe_path = output_dir / f"{acquisition_function}_pehe.json"
-        with pehe_path.open(mode="r") as pp:
-            pehe = json.load(pp)
-            del pehe["acquisition_function"]
-        pehes = []
-        num_acquired = []
-        for trial, results in pehe.items():
-            pehes.append(results["value"])
-            num_acquired.append(results["num_acquired"])
-        pehes = np.asarray(pehes)
-        mean_pehe = pehes.mean(0)
-        sem_pehe = stats.sem(pehes, axis=0)
-        x = np.asarray(num_acquired[0])
-        _ = plt.plot(
-            x,
-            mean_pehe,
-            color=styles[acquisition_function][0],
-            marker=styles[acquisition_function][2],
-            label=acquisition_function,
-        )
-        _ = plt.fill_between(
-            x=x,
-            y1=mean_pehe - sem_pehe,
-            y2=mean_pehe + sem_pehe,
-            color=styles[acquisition_function][0],
-            alpha=0.3,
-        )
-        _ = plt.legend(loc=None, title=None)
-    _ = plt.xlabel("Data size")
-    _ = plt.ylabel(r"PEHE")
-    _ = plt.savefig(output_dir / "convergence.png", dpi=150)
-
-
 def plot_policy_values(output_dir, methods, fairness=False, rename_labels={}, show_plot=False):
     data = {}
     suffix = "_wc_sensitive" if fairness else ""
@@ -409,22 +372,3 @@ def format_performance_table(methods, switching_step, output_dir):
     final_table.to_csv(output_dir / 'performance_table_mean_SD.csv')
 
     return result_df
-
-
-def plot_curve_over_t(output_dir, show_plot=False):
-    benchmark_df = pd.read_csv(output_dir / "banchmark_performance.csv")
-    sns.set(style="whitegrid")  # Optional: Set a grid background
-    metrics = ['policy_value', 'fair_policy_value', 'eta', 'objective1', 'objective2']
-
-    for metric in metrics:
-        sns.lineplot(x="switching_step", y=metric, hue="acquisition_method", data=benchmark_df)
-
-        # Set plot labels and title
-        plt.xlabel("t*")
-        plt.ylabel(metric)
-        plt.legend(loc="upper right", title="Acquisition")
-
-        # Show the plot
-        _ = plt.savefig(output_dir / f"curve_over_t_{metric}.png", dpi=150)
-        if show_plot:
-            plt.show()
