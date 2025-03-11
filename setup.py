@@ -17,6 +17,7 @@ setup(
         "hyperopt==0.2.5",
         "ray[tune]==1.7.0",
         "ray[default]==1.7.0",
+        "protobuf==3.20.*",
         "matplotlib==3.4.3",
         "tensorboard==2.7.0",
         "torchvision==0.11.1",

@@ -20,11 +20,48 @@ $  python -m src.main
 $  python -m src.main --dataset synthetic --max_acquisitions 30 --switching_step 14
 ```
 
+## Repository structure
+This repository is organised as follows:
+```bash
+rfan-trial/
+    |- src/                          # RFAN's source code
+        |- active_learning/          # Modules for active learning for the augmented trial stage
+           |- early_stopping/           # Active stage with ES
+           |- acquisitions.py           # Acquisition functions for patient selection
+           |- assignments.py            # Treatment assignments rules
+           |- active_learning.py        # Core logic for executing active learning steps
+
+        |- datasets/                 # synthetic and semi-synthetic data preprocessing
+           |-  active_learning_data.py  # Handles data pools
+           |-  covid.py                 # COVID-19 data preprocessing
+           |-  iwpc.py                  # IWPC warfarin dataset preprocessing
+           |-  synthetic.py             # Synthetic dataset generation
+           |-  data_utils.py            # Data processing utilities
+
+        |- models/                   # Model training
+           |- modules/               # Submodules for model components
+           |- core.py                # Core training and inference logic
+           |- deep_kernel.py         # Deep Kernel Gaussian Process (DKGP) model
+           |- models_utils.py        
+
+        |- evaluation/               # Evaluation and plotting modules        
+        |- main.py                   # Main script to run experiments
+        |- benchmark.py              # Experimental benchmark setup and running
+        |- config.py                 # Configuration settings
+        |- tuning.py                 # Model tuning utilities
+        |- policy.py                 # Treatment policy construction
+        |- utils.py                  # Other utilities
+      
+    |- reports/                      # Stores experiment results and model checkpoints
+    |- environment.yml               # Conda environment setup
+    |- setup.py                      # Package setup file
+```
+
 ## Further info
 - You can modify **`config.py`** and **`benchmark.py`**  to adjust experimental setups
 - After downloading the corresponding datasets, you can find our data parsers in the **`datasets/`** directory. 
 
 ## Contact
 For any questions, feel free to reach out to: <br>
-📧 omernoy4@gmail.com
+📧 Omer Noy Klein (omernoy4@gmail.com)
 
